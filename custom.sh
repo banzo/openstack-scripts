@@ -25,7 +25,7 @@ IMAGE=$(openstack image list -f value -c Name|grep cirros|grep -v 'ramdisk\|kern
 
 if [ "${SSH_KEYNAME}" = "default" ]
 then
-    [[ -e ~/.ssh/id_rsa ]] || ssh-keygen -f ~/.ssh/id_rsa
+    [[ -e ~/.ssh/id_rsa ]] || ssh-keygen -f ~/.ssh/id_rsa -q -N ""
     if ! openstack keypair show default > /dev/null 2>&1
     then
         openstack keypair create --public-key ~/.ssh/id_rsa.pub default
