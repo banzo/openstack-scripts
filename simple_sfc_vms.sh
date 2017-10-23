@@ -78,6 +78,8 @@ neutron port-pair-group-create --port-pair PP3 PG2
 # The complete chain
 neutron port-chain-create --port-pair-group PG1 --port-pair-group PG2 --flow-classifier FC_udp --flow-classifier FC_http PC1
 
+sleep 5
+
 # Start a basic demo web server
 ssh -o StrictHostKeyChecking=no cirros@${DEST_IP} 'while true; do echo -e "HTTP/1.0 200 OK\r\n\r\nWelcome to $(hostname)" | sudo nc -l -p 80 ; done&'
 
