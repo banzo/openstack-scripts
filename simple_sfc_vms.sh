@@ -10,33 +10,44 @@
 neutron net-update --port_security_enabled=False private
 
 # Create network ports for all VMs
-for port in p1in p1out p2in p2out p3in p3out source_vm_port dest_vm_port
-do
-    neutron port-create --name "${port}" private
-done
+#for port in p1in p1out p2in p2out p3in p3out source_vm_port dest_vm_port
+#do
+#    neutron port-create --name "${port}" private
+#done
+
+neutron port-create private --fixed-ip ip-address=10.0.0.11 --name "p1in"
+neutron port-create private --fixed-ip ip-address=10.0.0.12 --name "p1out"
+neutron port-create private --fixed-ip ip-address=10.0.0.21 --name "p2in"
+neutron port-create private --fixed-ip ip-address=10.0.0.22 --name "p2out"
+neutron port-create private --fixed-ip ip-address=10.0.0.31 --name "p3in"
+neutron port-create private --fixed-ip ip-address=10.0.0.32 --name "p3out"
+neutron port-create private --fixed-ip ip-address=10.0.0.101 --name "source_vm_port"
+neutron port-create private --fixed-ip ip-address=10.0.0.102 --name "dest_vm_port"
+
+
 
 # SFC VMs
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p1in)" \
     --nic port-id="$(neutron port-show -f value -c id p1out)" \
-    vm1
+    sfc-dpi
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p2in)" \
     --nic port-id="$(neutron port-show -f value -c id p2out)" \
-    vm2
+    sfc-firewall
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p3in)" \
     --nic port-id="$(neutron port-show -f value -c id p3out)" \
-    vm3
+    sfc-firewall-noftp
 
 # Demo VMs
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id source_vm_port)" \
-    source_vm
+    bsa_proxy
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id dest_vm_port)" \
