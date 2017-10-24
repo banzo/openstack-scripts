@@ -110,41 +110,41 @@ done
 
 # DO THE T4 SFC SETUP
 
-neutron port-create private --fixed-ip ip_address=11.0.0.11 --name "p1in_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.12 --name "p1out_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.21 --name "p2in_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.22 --name "p2out_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.31 --name "p3in_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.101 --name "source_vm_port_t4"
-neutron port-create private --fixed-ip ip_address=11.0.0.102 --name "dest_vm_port_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.211 --name "p1in_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.212 --name "p1out_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.221 --name "p2in_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.222 --name "p2out_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.231 --name "p3in_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.232 --name "p3out_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.201 --name "source_vm_port_t4"
+neutron port-create private --fixed-ip ip_address=10.0.0.202 --name "dest_vm_port_t4"
 
 # SFC VMs
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p1in_t4)" \
     --nic port-id="$(neutron port-show -f value -c id p1out_t4)" \
-    sfc-dpi
+    sfc-dpi-t4
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p2in_t4)" \
     --nic port-id="$(neutron port-show -f value -c id p2out_t4)" \
-    sfc-firewall
+    sfc-firewall-t4
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p3in_t4)" \
     --nic port-id="$(neutron port-show -f value -c id p3out_t4)" \
-    sfc-firewall-noftp
+    sfc-firewall-noftp-t4
 
 # Demo VMs
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id source_vm_port_t4)" \
-    bsa_proxy
+    bsa_proxy-t4
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id dest_vm_port_t4)" \
-    dest_vm
+    dest_vm-t4
 
 # HTTP Flow classifier (catch the web traffic from source_vm to dest_vm)
 SOURCE_IP=$(openstack port show source_vm_port_t4 -f value -c fixed_ips|grep "ip_address='[0-9]*\."|cut -d"'" -f2)
@@ -213,12 +213,12 @@ SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --c
 SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewall32 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.32,*'))"
 
 ## T4
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt411 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.11,*'))"
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt412 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.12,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt411 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.211,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt412 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.212,*'))"
 
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt421 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.21,*'))"
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt422 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.22,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt421 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.221,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt422 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.222,*'))"
 
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt431 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.31,*'))"
-SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt432 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.32,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt431 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.231,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt432 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.232,*'))"
 
