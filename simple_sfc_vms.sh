@@ -107,3 +107,25 @@ sudo ip route add ${DEST_IP} dev eth1
 
 EOF
 done
+
+# create captures
+## T3
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewall11 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.11,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewall12 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.12,*'))"
+
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPI21 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.21,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPI22 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.22,*'))"
+
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewall31 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.31,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewall32 --gremlin "G.V().Has('Neutron/IPs', Regex('10.0.0.32,*'))"
+
+## T4
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt411 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.11,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt412 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.12,*'))"
+
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt421 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.21,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCDPIt422 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.22,*'))"
+
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt431 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.31,*'))"
+SKYDIVE_USERNAME=admin SKYDIVE_PASSWORD=pass123456 /opt/stack/go/bin/skydive --conf /tmp/skydive.yaml client capture create --name SFCFirewallt432 --gremlin "G.V().Has('Neutron/IPs', Regex('11.0.0.32,*'))"
+
