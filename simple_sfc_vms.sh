@@ -117,14 +117,14 @@ neutron router-interface-add router1 sfc-t4-sn
 # Disable port security (else packets would be rejected when exiting the service VMs)
 neutron net-update --port_security_enabled=False sfc-t4
 
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.11 --name "p1in_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.12 --name "p1out_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.21 --name "p2in_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.22 --name "p2out_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.31 --name "p3in_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.32 --name "p3out_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.101 --name "source_vm_port_t4"
-neutron port-create sfc-t4 --fixed-ip ip-address=11.0.0.102 --name "dest_vm_port_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.11 --name "p1in_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.12 --name "p1out_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.21 --name "p2in_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.22 --name "p2out_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.31 --name "p3in_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.101 --name "source_vm_port_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.102 --name "dest_vm_port_t4"
 
 # SFC VMs
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
