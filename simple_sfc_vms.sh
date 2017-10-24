@@ -15,14 +15,14 @@ neutron net-update --port_security_enabled=False private
 #    neutron port-create --name "${port}" private
 #done
 
-neutron port-create private --fixed-ip ip-address=10.0.0.11 --name "p1in"
-neutron port-create private --fixed-ip ip-address=10.0.0.12 --name "p1out"
-neutron port-create private --fixed-ip ip-address=10.0.0.21 --name "p2in"
-neutron port-create private --fixed-ip ip-address=10.0.0.22 --name "p2out"
-neutron port-create private --fixed-ip ip-address=10.0.0.31 --name "p3in"
-neutron port-create private --fixed-ip ip-address=10.0.0.32 --name "p3out"
-neutron port-create private --fixed-ip ip-address=10.0.0.101 --name "source_vm_port"
-neutron port-create private --fixed-ip ip-address=10.0.0.102 --name "dest_vm_port"
+neutron port-create private --fixed-ip ip_address=10.0.0.11 --name "p1in"
+neutron port-create private --fixed-ip ip_address=10.0.0.12 --name "p1out"
+neutron port-create private --fixed-ip ip_address=10.0.0.21 --name "p2in"
+neutron port-create private --fixed-ip ip_address=10.0.0.22 --name "p2out"
+neutron port-create private --fixed-ip ip_address=10.0.0.31 --name "p3in"
+neutron port-create private --fixed-ip ip_address=10.0.0.32 --name "p3out"
+neutron port-create private --fixed-ip ip_address=10.0.0.101 --name "source_vm_port"
+neutron port-create private --fixed-ip ip_address=10.0.0.102 --name "dest_vm_port"
 
 
 
