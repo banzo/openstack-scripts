@@ -86,6 +86,9 @@ sleep 5
 # Start a basic demo web server
 ssh -o StrictHostKeyChecking=no cirros@${DEST_IP} 'while true; do echo -e "HTTP/1.0 200 OK\r\n\r\nWelcome to $(hostname)" | sudo nc -l -p 80 ; done&'
 
+# Start traffic simulation
+ssh -o StrictHostKeyChecking=no cirros@${SOURCE_IP} 'while true; do curl 10.0.0.101; sleep 1; done&'
+
 # On service VMs, enable eth1 interface and add static routing
 for sfc_port in p1in p2in p3in
 do
