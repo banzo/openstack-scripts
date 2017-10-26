@@ -15,7 +15,7 @@ nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --nic port-id="$(neutron port-show -f value -c id p3out)" \
     sfc-firewall-hardened-t3
 
-nova stop sfc-firewall-t3
+nova delete sfc-firewall-t3
 
 neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.31 --name "p3in_t4"
 neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
@@ -23,10 +23,10 @@ neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
     --nic port-id="$(neutron port-show -f value -c id p3in_t4)" \
-    --nic port-id="$(neutron port-show -f value -c id p3in_t4)" \
+    --nic port-id="$(neutron port-show -f value -c id p3out_t4)" \
     sfc-firewall-hardened-t4
 
-nova stop sfc-firewall-t4
+nova delete sfc-firewall-t4
 
 
 sleep 5
