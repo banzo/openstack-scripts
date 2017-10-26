@@ -22,8 +22,8 @@ neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
 
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
-    --nic port-id="$(neutron port-show -f value -c id p3in)" \
-    --nic port-id="$(neutron port-show -f value -c id p3out)" \
+    --nic port-id="$(neutron port-show -f value -c id p3in_t4)" \
+    --nic port-id="$(neutron port-show -f value -c id p3in_t4)" \
     sfc-firewall-hardened-t4
 
 nova stop sfc-firewall-t4
