@@ -7,7 +7,7 @@
 . $(dirname "${BASH_SOURCE}")/tools.sh
 
 neutron port-create private --fixed-ip ip_address=10.0.0.31 --name "p3in"
-neutron port-create private --fixed-ip ip_address=10.0.0.31 --name "p3out"
+neutron port-create private --fixed-ip ip_address=10.0.0.32 --name "p3out"
 
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
@@ -18,7 +18,7 @@ nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
 nova stop sfc-firewall-t3
 
 neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.31 --name "p3in_t4"
-neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.31 --name "p3out_t4"
+neutron port-create sfc-t4 --fixed-ip ip_address=11.0.0.32 --name "p3out_t4"
 
 nova boot --image "${IMAGE}" --flavor "${FLAVOR}" \
     --key-name "${SSH_KEYNAME}" --security-groups "${SECGROUP}" \
